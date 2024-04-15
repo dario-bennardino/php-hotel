@@ -1,7 +1,9 @@
 <?php
 $data = $_GET;
 // $name = $_GET['parcheggio'];
-$name = isset($_GET['parcheggio']) ? $_GET['parcheggio'] : '';
+// $name = isset($_GET['parcheggio']) ? $_GET['parcheggio'] : '';
+$name = isset($_GET['parcheggio']) ? ($_GET['parcheggio'] === 'true') : null;
+
 
 
 $hotels = [
@@ -80,10 +82,10 @@ $hotels = [
             <div class="d-flex flex-column ">
                 <label for="parcheggio">Ricerca Hotel</label>
                 <select name="parcheggio" id="parcheggio">
-                    <!-- <option value="true">Con Parcheggio</option>
-                    <option value="false">Senza Parcheggio</option> -->
-                    <option value="true" <?php if ($name === 'true') echo 'selected'; ?>>Con Parcheggio</option>
-                    <option value="false" <?php if ($name === 'false') echo 'selected'; ?>>Senza Parcheggio</option>
+                    <option value="">Mostra tutti</option>
+                    <option value="true" <?php if ($name === true) echo 'selected'; ?>>Con Parcheggio</option>
+                    <option value="false" <?php if ($name === false) echo 'selected'; ?>>Senza Parcheggio</option>
+                </select>
                 </select>
                 <div class="mt-3">
                     <button type="submit">Invio</button>
@@ -96,8 +98,7 @@ $hotels = [
         <!-- Versione con Card di Bootstrap -->
         <div class="row">
             <?php foreach ($hotels as $key => $hotel) : ?>
-
-                <?php if ($name === 'true' && $hotel['parking'] === true) : ?>
+                <?php if ($name === null || $hotel['parking'] === $name) : ?>
                     <div class="col-4 mt-4 ">
                         <div class="card" style="width: 18rem;">
                             <img src="..." class="card-img-top" alt="...">
