@@ -1,4 +1,8 @@
 <?php
+$data = $_GET;
+// $name = $_GET['parcheggio'];
+$name = isset($_GET['parcheggio']) ? $_GET['parcheggio'] : '';
+
 
 $hotels = [
 
@@ -58,7 +62,9 @@ $hotels = [
 <body>
     <div class="container my-4">
         <h1 class="text-center">Elenco Hotel</h1>
-        <ul>
+
+        <!-- Versione base dell'esercizio -->
+        <!-- <ul>
             <?php foreach ($hotels as $key => $hotel) : ?>
                 <li class="my-4">
                     <h2><?php echo $hotel['name']; ?></h2>
@@ -68,7 +74,46 @@ $hotels = [
                     <h4>Distanza dal centro: <?php echo $hotel['distance_to_center']; ?></h4>
                 </li>
             <?php endforeach; ?>
-        </ul>
+        </ul> -->
+
+        <form action="index.php" method="GET" class="mt-3">
+            <div class="d-flex flex-column ">
+                <label for="parcheggio">Ricerca Hotel</label>
+                <select name="parcheggio" id="parcheggio">
+                    <!-- <option value="true">Con Parcheggio</option>
+                    <option value="false">Senza Parcheggio</option> -->
+                    <option value="true" <?php if ($name === 'true') echo 'selected'; ?>>Con Parcheggio</option>
+                    <option value="false" <?php if ($name === 'false') echo 'selected'; ?>>Senza Parcheggio</option>
+                </select>
+                <div class="mt-3">
+                    <button type="submit">Invio</button>
+                    <button type="reset">Nuova ricerca</button>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- Versione con Card di Bootstrap -->
+        <div class="row">
+            <?php foreach ($hotels as $key => $hotel) : ?>
+
+                <?php if ($name === 'true' && $hotel['parking'] === true) : ?>
+                    <div class="col-4 mt-4 ">
+                        <div class="card" style="width: 18rem;">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h4 class="card-text"><?php echo $hotel['name']; ?></h4>
+                                <p class="card-text"><strong>Descrizione:</strong> <?php echo $hotel['description']; ?></p>
+                                <p class="card-text"><strong>Parcheggio:</strong> <?php echo $hotel['parking']; ?></p>
+                                <p class="card-text"><strong>Voto:</strong> <?php echo $hotel['vote']; ?></p>
+                                <p class="card-text"><strong>Distanza dal centro:</strong> <?php echo $hotel['distance_to_center']; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+        </div>
     </div>
 </body>
 
